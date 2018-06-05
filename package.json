@@ -32,5 +32,10 @@
     "mocha-junit-reporter": "1.13.0",
     "nock": "9.0.13",
     "nyc": "^11.0.3"
-  }
+  },
+  "files": [
+    "/index.js",
+    "/commands",
+    "/lib"
+  ]
 }
