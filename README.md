@@ -3,7 +3,7 @@ heroku-fork
 
 Heroku CLI plugin to fork an existing app into a new app.
 
-**DEPRECATED**: Heroku fork is deprecated as a core command. It will no longer be included in the CLI by default 2017-12-01. We recommend using [review apps](https://devcenter.heroku.com/articles/github-integration-review-apps) instead of fork if it will work for your use-case:. You may also fork the [Github project](https://github.com/heroku/heroku-fork) to continue using this project as a CLI plugin. See [Developing CLI Plugins](https://devcenter.heroku.com/articles/developing-cli-plugins) for more information on developing plugins.
+Deprecated by Heroku: `Heroku fork` was deprecated as a core command, but YNAB has forked it for continued internal use as the [Original Project](https://github.com/heroku/heroku-fork) recommends we do.
 
 Installation
 ============
@@ -22,7 +22,11 @@ Fork an existing app into a new one
 
 `--region` specify a region
 
+`--space` specify a private space in which to create the app
+
 `--skip-pg` skip postgres databases
+
+`--skip-slug` Don't copy the slug from the old app to the new app
 
 `--from` app to fork from
 
