@@ -69,7 +69,7 @@ function* fork (context, heroku) {
   let slug   = yield apps.getLastSlug(oldApp);
 
   if (stopping) { return; }
-  let newApp = yield apps.createNewApp(oldApp, toAppName, context.flags.region);
+  let newApp = yield apps.createNewApp(oldApp, toAppName, context.flags.region, context.flags.space);
   deleteAppOnFailure = newApp.name;
 
   if (stopping) { return; }
@@ -82,7 +82,11 @@ function* fork (context, heroku) {
   yield addons.copyConfigVars(oldApp, newApp, context.flags['skip-pg']);
 
   if (stopping) { return; }
-  yield apps.copySlug(oldApp, newApp, slug);
+  if (context.flags['skip-slug']){
+    console.log('Skipping copying the slug. (You will need to deploy the app before it will work.)')
+  } else {
+    yield apps.copySlug(oldApp, newApp, slug);
+  }
 
   yield wait(2000); // TODO remove this after api #4022
 
@@ -120,9 +124,11 @@ Example:
     {name: 'confirm', description: 'overwrite existing config vars or existing add-on attachments', hasValue: true},
     {name: 'region', description: 'specify a region', hasValue: true},
     {name: 'skip-pg', description: 'skip postgres databases', hasValue: false},
+    {name: 'skip-slug', description: 'skip copying the slug', hasValue: false},
     {name: 'from', description: 'app to fork from', hasValue: true},
     {name: 'to', description: 'app to create', hasValue: true},
-    {name: 'app', char: 'a', hasValue: true, hidden: true}
+    {name: 'app', char: 'a', hasValue: true, hidden: true},
+    {name: 'space', description: 'private space to create the app in', hasValue: true}
   ],
   args: [{name: 'NEWNAME', optional: true, hidden: true}],
   run: cli.command({preauth: true}, co.wrap(run))
