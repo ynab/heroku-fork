@@ -69,7 +69,7 @@ function* fork (context, heroku) {
   let slug   = yield apps.getLastSlug(oldApp);
 
   if (stopping) { return; }
-  let newApp = yield apps.createNewApp(oldApp, toAppName, context.flags.region, context.flags.space);
+  let newApp = yield apps.createNewApp(oldApp, toAppName, context.flags.region, context.flags.org, context.flags.space);
   deleteAppOnFailure = newApp.name;
 
   if (stopping) { return; }
@@ -128,6 +128,7 @@ Example:
     {name: 'from', description: 'app to fork from', hasValue: true},
     {name: 'to', description: 'app to create', hasValue: true},
     {name: 'app', char: 'a', hasValue: true, hidden: true},
+    {name: 'org', description: 'Organization to create the app in. If specified as the word "none", the new app will not be in an organization.', hasValue: true},
     {name: 'space', description: 'private space to create the app in', hasValue: true}
   ],
   args: [{name: 'NEWNAME', optional: true, hidden: true}],
